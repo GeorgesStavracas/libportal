@@ -1,0 +1,31 @@
+name: Release libportal
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        type: string
+        description: Version tag
+        default: ''
+        required: true
+
+jobs:
+  bump_version:
+    steps:
+
+      - name: Checkout libportal
+        uses: actions/checkout@v4
+        with:
+          # Need to fetch everything so that 'git describe' can see the tags
+          fetch-depth: 0
+
+
+      - name: Check tag
+        run: |
+          git tag -l
+          if [ $(git tag -l ${{ inputs.tag }}) ]; then
+            echo "Tag found!!!"
+            exit 22
+          else
+            echo "We gud"
+          fi
