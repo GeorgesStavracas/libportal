@@ -553,7 +553,7 @@
               <property name="row">18</property>
             </layout>
           </object>
-        </child>"
+        </child>
         <child>
           <object class="GtkLabel">
             <property name="halign">end</property>
