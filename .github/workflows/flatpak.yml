@@ -32,7 +32,7 @@ jobs:
     name: GTK4
     runs-on: ubuntu-latest
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-44
+      image: bilelmoussaoui/flatpak-github-actions:gnome-45
       options: --privileged
     steps:
       - name: Checkout
