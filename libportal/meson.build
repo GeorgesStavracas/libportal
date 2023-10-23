@@ -27,6 +27,9 @@ headers = [
   'trash.h',
   'types.h',
   'updates.h',
+  'usb.h',
+  'usb-device.h',
+  'usb-device-candidate.h',
   'wallpaper.h',
 ]
 
@@ -62,6 +65,9 @@ src = [
   'spawn.c',
   'trash.c',
   'updates.c',
+  'usb.c',
+  'usb-device.c',
+  'usb-device-candidate.c',
   'wallpaper.c',
   generated_files,
 ]

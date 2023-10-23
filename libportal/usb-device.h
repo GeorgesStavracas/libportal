@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018, Matthias Clasen
+ * Copyright (C) 2023 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This file is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -20,33 +20,28 @@
 #pragma once
 
 #include <libportal/types.h>
+#include <stdint.h>
 
 G_BEGIN_DECLS
 
-#define XDP_TYPE_SESSION (xdp_session_get_type ())
+#define XDP_TYPE_USB_DEVICE (xdp_usb_device_get_type())
 
 XDP_PUBLIC
-G_DECLARE_FINAL_TYPE (XdpSession, xdp_session, XDP, SESSION, GObject)
-
-/**
- * XdpSessionType:
- * @XDP_SESSION_SCREENCAST: a screencast session.
- * @XDP_SESSION_REMOTE_DESKTOP: a remote desktop session.
- * @XDP_SESSION_INPUT_CAPTURE: an input capture session.
- *
- * The type of a session.
- */
-typedef enum {
-  XDP_SESSION_SCREENCAST,
-  XDP_SESSION_REMOTE_DESKTOP,
-  XDP_SESSION_INPUT_CAPTURE,
-  XDP_SESSION_USB,
-} XdpSessionType;
+G_DECLARE_FINAL_TYPE (XdpUsbDevice, xdp_usb_device, XDP, USB_DEVICE, GObject)
 
 XDP_PUBLIC
-void            xdp_session_close             (XdpSession *session);
+const char *xdp_usb_device_get_id (XdpUsbDevice *self);
 
 XDP_PUBLIC
-XdpSessionType  xdp_session_get_session_type  (XdpSession *session);
+const char *xdp_usb_device_get_property_string (XdpUsbDevice *self,
+                                                const char   *property);
+
+XDP_PUBLIC
+gboolean xdp_usb_device_get_property_boolean (XdpUsbDevice *self,
+                                              const char   *property);
+
+XDP_PUBLIC
+uint16_t xdp_usb_device_get_property_uint16 (XdpUsbDevice *self,
+                                             const char   *property);
 
 G_END_DECLS

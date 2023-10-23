@@ -28,6 +28,8 @@ var PortalTestWindow = GObject.registerClass({
         'updateDialog2',
         'updateProgressbar',
         'updateLabel',
+        'usbStack',
+        'usbListBox',
         'ok2',
         'openLocalDir',
         'openLocalAsk',
@@ -672,7 +674,65 @@ var PortalTestWindow = GObject.registerClass({
                     logError(e);
                     return;
                 }
-
             });
+    }
+
+    _closeUsbSession() {
+        if (this._usbSession) {
+            this._usbSession.close();
+            delete this._usbSession;
+            this._usbListBox.bind_model(null, null);
+            this._usbListBox.visible = false;
+            this._usbStack.visible_child_name = 'request';
+        }
+    }
+
+    _listUsbDevices() {
+        const parent = XdpGtk4.parent_new_gtk(this);
+
+        this._closeUsbSession();
+
+        this._portal.create_usb_session(
+            parent,
+            Xdp.UsbAccessMode.ALL,
+            null,
+            null,
+            (portal, result) => {
+                try {
+                    this._usbSession = this._portal.create_usb_session_finish(result);
+                    this._usbStack.visible_child_name = 'usb-devices';
+
+                    this._usbListBox.visible = true;
+                    this._usbListBox.bind_model(
+                        this._usbSession.get_devices(),
+                        usbDevice => {
+                            const box = new Gtk.Box({
+                                orientation: Gtk.Orientation.VERTICAL,
+                                margin_top: 6,
+                                margin_bottom: 6,
+                            });
+
+                            for (const property of ['product_name', 'vendor_name']) {
+                                const prop = usbDevice.get_property_string(property);
+                                box.append(new Gtk.Label({
+                                    label: prop ? prop : "Unnamed",
+                                    xalign: 0.0,
+                                }));
+                            }
+
+                            box.append(new Gtk.Label({
+                                label: usbDevice.id,
+                                xalign: 0.0,
+                                css_classes: ['dim-label'],
+                            }));
+
+                            return box;
+                        });
+                } catch(e) {
+                    logError(e);
+                    return;
+                }
+            }
+        );
     }
 });

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021, Georges Basile Stavracas Neto
+ * Copyright (C) 2023 Georges Basile Stavracas Neto <georges.stavracas@gmail.com>
  *
  * This file is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as
@@ -19,10 +19,7 @@
 
 #pragma once
 
-#include <glib.h>
-#include <glib-object.h>
-#include <gio/gio.h>
+#include "usb-device-candidate.h"
 
-typedef struct _XdpParent XdpParent;
-typedef struct _XdpPortal XdpPortal;
-typedef struct _XdpUsbDeviceCandidate XdpUsbDeviceCandidate;
+GVariant *
+xdp_usb_device_candidate_to_gvariant (XdpUsbDeviceCandidate *self);

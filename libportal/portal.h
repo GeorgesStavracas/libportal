@@ -40,4 +40,7 @@
 #include <libportal/trash.h>
 #include <libportal/types.h>
 #include <libportal/updates.h>
+#include <libportal/usb.h>
+#include <libportal/usb-device.h>
+#include <libportal/usb-device-candidate.h>
 #include <libportal/wallpaper.h>
